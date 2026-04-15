@@ -28,7 +28,9 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run build
+      - run: npx prisma generate
+
+      - run: npx vite build
 
       - uses: actions/upload-pages-artifact@v3
         with:
