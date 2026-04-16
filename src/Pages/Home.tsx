@@ -15,7 +15,7 @@ export default function Home() {
           {/* Profile picture */}
           <img
             className="avatar"
-            src="/picProfile.png"
+            src={import.meta.env.BASE_URL + "picProfile.png"}
             alt="Profile"
           />
 
