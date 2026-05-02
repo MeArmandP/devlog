@@ -21,10 +21,15 @@ export default function EntriesPage({ entries, onAddEntry }: Props) {
       <Header />
       <main>
         {/* Title showing total number of entries */}
-        <h2>All Entries ({entries.length})</h2>
+        <div className="entries-header">
+          <span className="entries-count">All Entries ({entries.length})</span>
+        </div>
 
         {/* Form for creating new entries */}
-        <NewEntryForm onAddEntry={onAddEntry} />
+        <div className="new-entry-card">
+          <h3>New Entry</h3>
+          <NewEntryForm onAddEntry={onAddEntry} />
+        </div>
 
         {/* Show message if no entries exist */}
         {entries.length === 0 && <p>No entries yet. Add one!</p>}

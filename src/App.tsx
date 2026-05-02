@@ -1,9 +1,8 @@
 import { Routes, Route, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Home from './Pages/Home'
 import About from './Pages/About'
 import EntriesPage from './Pages/Entries'
-import seedEntries from './data/entries'
 import type { Entry, Mood } from './data/entries'
 import './App.css'
 
@@ -12,31 +11,31 @@ import './App.css'
  * Handles entry creation and navigation between pages (Home, Entries, About)
  */
 export default function App() {
-  // Manages the list of all diary entries
-  const [entries, setEntries] = useState<Entry[]>(seedEntries)
+  const [entries, setEntries] = useState<Entry[]>([])
   const navigate = useNavigate()
 
-  /**
-   * Creates a new entry with the provided title, content, mood, and tags
-   * Adds the new entry to the beginning of the entries list
-   * Navigates to the Entries page to display all entries
-   */
-  function handleAddEntry(
+  useEffect(() => {
+    fetch('/api/entries')
+      .then((r) => r.json())
+      .then((data: Entry[]) => setEntries(data))
+      .catch(console.error)
+  }, [])
+
+  async function handleAddEntry(
     title: string,
     content: string,
     mood: Mood,
     tags: string[]
   ) {
-    const newEntry: Entry = {
-      id: Date.now(),
-      title,
-      summary: content,
-      mood,
-      tags,
-      createdAt: new Date().toISOString(),
+    const res = await fetch('/api/entries', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, summary: content, mood, tags }),
+    })
+    if (res.ok) {
+      const saved: Entry = await res.json()
+      setEntries((prev) => [saved, ...prev])
     }
-
-    setEntries((prev) => [newEntry, ...prev])
     navigate('/entries')
   }
 

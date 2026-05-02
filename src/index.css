@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Exo+2:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -8,36 +10,61 @@ html {
   scroll-behavior: smooth;
 }
 
+:root {
+  --bg: #0f0e17;
+  --bg-card: #1c1b2e;
+  --bg-card-hover: #252440;
+  --gold: #f5c518;
+  --gold-dim: #c9a815;
+  --orange: #e67e22;
+  --crimson: #c0392b;
+  --purple: #7c3aed;
+  --cyan: #06b6d4;
+  --green: #22c55e;
+  --text: #e2ddd4;
+  --text-muted: #9b96a3;
+  --border: rgba(245, 197, 24, 0.2);
+  --border-bright: rgba(245, 197, 24, 0.55);
+}
+
 body {
   min-height: 100vh;
-  font-family: Georgia, "Times New Roman", Times, serif;
-  background: #f2e9d4;
-  color: #1d1a16;
+  font-family: 'Exo 2', 'Segoe UI', system-ui, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
   line-height: 1.75;
   letter-spacing: 0.01em;
 }
 
+/* Star field background */
 body::before {
-  content: "";
+  content: '';
   position: fixed;
   inset: 0;
   background-image:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.35), transparent 18%),
-    radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.03), transparent 18%);
+    radial-gradient(circle, rgba(245, 197, 24, 0.35) 1px, transparent 1px),
+    radial-gradient(circle, rgba(6, 182, 212, 0.2) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 90px 90px, 143px 143px, 57px 57px;
+  background-position: 0 0, 45px 60px, 22px 30px;
   pointer-events: none;
-  z-index: -1;
+  z-index: 0;
 }
 
 #root {
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
 }
 
 a {
-  color: #761b18;
+  color: var(--gold);
   text-decoration: none;
+  transition: color 0.15s;
 }
 
 a:hover {
+  color: var(--gold-dim);
   text-decoration: underline;
 }
 
@@ -47,8 +74,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Georgia, "Times New Roman", Times, serif;
-  font-weight: 700;
+  font-family: 'Bangers', 'Impact', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.05em;
 }
 
 p,
@@ -57,7 +85,7 @@ button,
 input,
 textarea,
 select {
-  font-family: inherit;
+  font-family: 'Exo 2', 'Segoe UI', system-ui, sans-serif;
 }
 
 button,
@@ -68,15 +96,88 @@ select {
 }
 
 button {
-  border: 1px solid #4c3f2d;
-  background: #f9f0d9;
-  color: #2d2317;
+  border: 1px solid var(--border-bright);
+  background: var(--bg-card);
+  color: var(--text);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background: var(--bg-card-hover);
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
 }
 
 input,
 textarea,
 select {
-  border: 1px solid #b8a686;
-  background: #fbf3e6;
-  color: #2d251f;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 8px 12px;
+  width: 100%;
+  transition: border-color 0.18s, box-shadow 0.18s;
 }
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.15);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+select option {
+  background: var(--bg-card);
+  color: var(--text);
+}
+
+label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 5px;
+  display: block;
+}
+
+textarea {
+  resize: vertical;
+}
+
+strong {
+  color: var(--crimson);
+}
+
+/* ── Keyframes ───────────────────────────────── */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger entry cards */
+.entry-card:nth-child(1) { animation-delay: 0.05s; }
+.entry-card:nth-child(2) { animation-delay: 0.12s; }
+.entry-card:nth-child(3) { animation-delay: 0.19s; }
+.entry-card:nth-child(4) { animation-delay: 0.26s; }
+.entry-card:nth-child(5) { animation-delay: 0.33s; }
+.entry-card:nth-child(6) { animation-delay: 0.40s; }

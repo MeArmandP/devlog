@@ -125,7 +125,7 @@ function NewEntryForm({ onAddEntry }: NewEntryFormProps) {
         />
       </p>
 
-      <button type="submit" disabled={submitted && !isValid}>
+      <button type="submit" className="btn-submit" disabled={submitted && !isValid}>
         Save Entry
       </button>
     </form>

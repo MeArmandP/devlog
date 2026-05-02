@@ -1,32 +1,35 @@
-import type { Entry } from '../data/entries'
+import type { Entry, Mood } from '../data/entries'
 
-/**
- * Displays a single diary entry as a card component
- * Shows title, creation date, mood, content summary, and tags
- */
+// Mythology-themed mood icons: each mood maps to a deity + emoji
+const moodConfig: Record<Mood, { emoji: string; deity: string }> = {
+  happy:       { emoji: '☀️', deity: 'Apollo' },
+  curious:     { emoji: '📜', deity: 'Thoth' },
+  frustrated:  { emoji: '⚡', deity: 'Zeus' },
+  neutral:     { emoji: '🌙', deity: 'Selene' },
+}
+
 function EntryCard({ entry }: { entry: Entry }) {
+  const { emoji, deity } = moodConfig[entry.mood]
+
   return (
-    <article className="entry-card">
-      {/* Entry title */}
+    <article className={`entry-card mood-${entry.mood}`}>
       <h3>{entry.title}</h3>
 
-      {/* Display creation date and associated mood */}
       <p>
         <time dateTime={entry.createdAt}>
           {new Date(entry.createdAt).toLocaleDateString()}
         </time>
-        {' · '}
-        {entry.mood}
+        <span className={`mood-badge mood-${entry.mood}`}>
+          {emoji} {deity}
+        </span>
       </p>
 
-      {/* Entry content summary */}
       <p>{entry.summary}</p>
 
-      {/* Display tags if any exist, prefixed with # */}
       {entry.tags.length > 0 && (
         <p>
           {entry.tags.map((tag) => (
-            <small key={tag}>{' '}#{tag}</small>
+            <span key={tag} className="tag-pill">#{tag}</span>
           ))}
         </p>
       )}
